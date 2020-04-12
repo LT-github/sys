@@ -15,7 +15,7 @@ public class Info {
     private Long id;
 
     @Column
-    private String sourceNumber;
+    private String registration;
 
     @Column
     private String referralCode;
@@ -26,10 +26,10 @@ public class Info {
     @Column
     private String latitude;
 
-    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL)
     private Set<Contacts> contacts;
 
-    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL)
     private Set<Note> notes;
 
 

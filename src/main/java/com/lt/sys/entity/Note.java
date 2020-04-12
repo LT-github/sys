@@ -17,7 +17,7 @@ public class Note {
     @Column(length = 255)
     private String msg;
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="info_id")
     private Info info;
 }
