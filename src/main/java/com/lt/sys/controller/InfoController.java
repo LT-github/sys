@@ -43,6 +43,7 @@ public class InfoController {
                     Note note = new Note();
                     note.setId(idWorker.nextId());
                     BeanUtils.copyProperties(noteDto,note);
+                    note.setInfo(info);
                     notes.add(note);
                 });
                 info.setNotes(notes);
@@ -53,6 +54,7 @@ public class InfoController {
                     Contacts contacts = new Contacts();
                     contacts.setId(idWorker.nextId());
                     BeanUtils.copyProperties(contactsDto, contacts);
+                    contacts.setInfo(info);
                     contactses.add(contacts);
                 });
                 info.setContacts(contactses);

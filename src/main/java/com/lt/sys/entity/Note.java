@@ -14,10 +14,13 @@ public class Note {
     @Column
     private String name;
 
+    @Column
+    private String phone;
+
     @Column(length = 255)
     private String msg;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
     @JoinColumn(name="info_id")
     private Info info;
 }
