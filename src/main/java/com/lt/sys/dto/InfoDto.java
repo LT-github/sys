@@ -9,10 +9,14 @@ import java.util.List;
 @Data
 public class InfoDto {
 
+    //注册人
     private String registration;
 
     //经度
     private String longitude;
+
+    //邀请码
+    private String referralCode;
 
     //纬度
     private String latitude;
