@@ -39,37 +39,38 @@ public class InfoController {
 
     @PostMapping("save")
     public HttpResult saveInfo(@RequestBody InfoDto dto){
-        System.out.println(dto.toString());
+//        System.out.println(dto.toString());
+        return HttpResult.success(null,"ok");
 
-        try {
-            Info info = new Info();
-            BeanUtils.copyProperties(dto,info);
-            info.setId(idWorker.nextId());
-            iInfoRepository.save(info);
-            if (null != dto.getNoteDtos() && 0 != dto.getNoteDtos().size()) {
-                dto.getNoteDtos().stream().forEach(noteDto -> {
-                    Note note = new Note();
-                    note.setId(idWorker.nextId());
-                    BeanUtils.copyProperties(noteDto,note);
-                    note.setInfo(info);
-                    iNoteRepository.save(note);
-                });
-            }
-            if (null != dto.getContactsDtos() && 0 != dto.getContactsDtos().size()) {
-                dto.getContactsDtos().stream().forEach(contactsDto -> {
-                    Contacts contacts = new Contacts();
-                    contacts.setId(idWorker.nextId());
-                    BeanUtils.copyProperties(contactsDto, contacts);
-                    contacts.setInfo(info);
-                    iContactsRepository.save(contacts);
-                });
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
-        }
-
-        return HttpResult.success(null,"Ok");
+//        try {
+//            Info info = new Info();
+//            BeanUtils.copyProperties(dto,info);
+//            info.setId(idWorker.nextId());
+//            iInfoRepository.save(info);
+//            if (null != dto.getNoteDtos() && 0 != dto.getNoteDtos().size()) {
+//                dto.getNoteDtos().stream().forEach(noteDto -> {
+//                    Note note = new Note();
+//                    note.setId(idWorker.nextId());
+//                    BeanUtils.copyProperties(noteDto,note);
+//                    note.setInfo(info);
+//                    iNoteRepository.save(note);
+//                });
+//            }
+//            if (null != dto.getContactsDtos() && 0 != dto.getContactsDtos().size()) {
+//                dto.getContactsDtos().stream().forEach(contactsDto -> {
+//                    Contacts contacts = new Contacts();
+//                    contacts.setId(idWorker.nextId());
+//                    BeanUtils.copyProperties(contactsDto, contacts);
+//                    contacts.setInfo(info);
+//                    iContactsRepository.save(contacts);
+//                });
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//            return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+//        }
+//
+//        return HttpResult.success(null,"Ok");
     }
 
 }
