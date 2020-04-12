@@ -15,6 +15,9 @@ public class Info {
     private Long id;
 
     @Column
+    private String sourceNumber;
+
+    @Column
     private String referralCode;
 
     @Column
