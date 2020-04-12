@@ -18,7 +18,7 @@ public class Contacts {
     @Column
     private String name;
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @ManyToOne
     @JoinColumn(name="info_id")
     private Info info;
 

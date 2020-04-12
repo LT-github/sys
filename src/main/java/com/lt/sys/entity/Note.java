@@ -15,12 +15,12 @@ public class Note {
     private String name;
 
     @Column
-    private String phone;
+    private String phoneNumber;
 
     @Column(length = 255)
     private String msg;
 
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @ManyToOne
     @JoinColumn(name="info_id")
     private Info info;
 }

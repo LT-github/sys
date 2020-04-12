@@ -26,11 +26,20 @@ public class Info {
     @Column
     private String latitude;
 
-    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Contacts> contacts;
 
-    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL)
+    @OneToMany(mappedBy = "info",cascade= CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Note> notes;
 
-
+    @Override
+    public String toString() {
+        return "Info{" +
+                "id=" + id +
+                ", registration='" + registration + '\'' +
+                ", referralCode='" + referralCode + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
+    }
 }

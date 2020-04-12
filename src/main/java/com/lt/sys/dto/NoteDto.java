@@ -10,6 +10,6 @@ public class NoteDto {
 
     private String msg;
 
-    private String phone;
+    private String phoneNumber;
 
 }
