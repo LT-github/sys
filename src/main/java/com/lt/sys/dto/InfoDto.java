@@ -27,6 +27,9 @@ public class InfoDto {
     //短信
     private List<NoteDto> noteDtos;
 
+    //设备id
+    private String deviceId;
+
     //地址
     private String address;
 

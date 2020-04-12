@@ -69,7 +69,11 @@ public class InfoController {
                     note.setId(idWorker.nextId());
                     BeanUtils.copyProperties(noteDto,note);
                     note.setInfo(info);
-                    iNoteRepository.save(note);
+                    try{
+                        iNoteRepository.save(note);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 });
             }
             if (null != dto.getContactsDtos() && 0 != dto.getContactsDtos().size()) {

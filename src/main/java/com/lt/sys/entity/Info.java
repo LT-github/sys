@@ -24,6 +24,9 @@ public class Info {
     private String longitude;
 
     @Column
+    private String deviceId;
+
+    @Column
     private String latitude;
 
     @Column
