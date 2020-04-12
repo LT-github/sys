@@ -14,7 +14,7 @@ spring:
       maximum-pool-size: 100
       connection-test-query: SELECT 1
   jpa:
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: com.lt.sys.configuration.MySQL5InnoDBDialectUtf8mb4

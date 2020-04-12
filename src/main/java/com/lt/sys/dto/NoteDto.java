@@ -12,4 +12,12 @@ public class NoteDto {
 
     private String phoneNumber;
 
+    @Override
+    public String toString() {
+        return "NoteDto{" +
+                "name='" + name + '\'' +
+                ", msg='" + msg + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

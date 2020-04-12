@@ -23,5 +23,14 @@ public class InfoDto {
     //通讯录
     private List<ContactsDto> contactsDtos;
 
-
+    @Override
+    public String toString() {
+        return "InfoDto{" +
+                "registration='" + registration + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", noteDtos=" + noteDtos.toString() +
+                ", contactsDtos=" + contactsDtos.toString() +
+                '}';
+    }
 }

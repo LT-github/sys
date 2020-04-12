@@ -39,6 +39,8 @@ public class InfoController {
 
     @PostMapping("save")
     public HttpResult saveInfo(@RequestBody InfoDto dto){
+        System.out.println(dto.toString());
+
         try {
             Info info = new Info();
             BeanUtils.copyProperties(dto,info);
