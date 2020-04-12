@@ -20,6 +20,9 @@ public class InfoDto {
     //短信
     private List<NoteDto> noteDtos;
 
+    //地址
+    private String address;
+
     //通讯录
     private List<ContactsDto> contactsDtos;
 
@@ -29,6 +32,7 @@ public class InfoDto {
                 "registration='" + registration + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", latitude='" + latitude + '\'' +
+                ", address='" + address + '\'' +
                 ", noteDtos=" + noteDtos.toString() +
                 ", contactsDtos=" + contactsDtos.toString() +
                 '}';

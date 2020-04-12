@@ -26,6 +26,9 @@ public class Info {
     @Column
     private String latitude;
 
+    @Column
+    private String address;
+
     @OneToMany(mappedBy = "info",cascade= CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Contacts> contacts;
 
