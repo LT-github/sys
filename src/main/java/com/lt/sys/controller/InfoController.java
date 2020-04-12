@@ -11,19 +11,17 @@ import com.lt.sys.dto.InfoDto;
 import com.lt.sys.entity.Contacts;
 import com.lt.sys.entity.Info;
 import com.lt.sys.entity.Note;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
-import java.util.Set;
 
 
 @RestController
+@RequestMapping("info")
 public class InfoController {
 
 
