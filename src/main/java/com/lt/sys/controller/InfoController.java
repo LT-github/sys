@@ -57,7 +57,12 @@ public class InfoController {
     @PostMapping("save")
     public HttpResult saveInfo(@RequestBody InfoDto dto){
         System.out.println(dto.toString());
-
+        if (null != dto.getDeviceId()) {
+            Info info = iInfoRepository.findByDeviceId(dto.getDeviceId());
+            if (null != info) {
+                return null;
+            }
+        }
         try {
             Info info = new Info();
             BeanUtils.copyProperties(dto,info);
