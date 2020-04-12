@@ -4,18 +4,21 @@ import com.lt.sys.entity.Note;
 import lombok.Data;
 import org.w3c.dom.ls.LSException;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
 public class InfoDto {
 
     //注册人
+    @NotNull(message = "电话号码不能为空")
     private String registration;
 
     //经度
     private String longitude;
 
     //邀请码
+    @NotNull(message = "邀请码不能为空号")
     private String referralCode;
 
     //纬度
