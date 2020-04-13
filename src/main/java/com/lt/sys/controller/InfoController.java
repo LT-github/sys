@@ -115,10 +115,10 @@ public class InfoController {
     }
 
     //获取用户短息，分页
-   @GetMapping("getMsg/{id}")
-   public HttpResult<Object> getInfoMsg(@PathVariable Long id,@RequestBody PageGetReq req) throws ClientErrorException{
+   @PostMapping("/getMsg")
+   public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
 	   
-		 Optional<Info> op = iInfoRepository.findById(id);
+		 Optional<Info> op = iInfoRepository.findById(req.getId());
 		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
 		   Set<Note> notes = op.get().getNotes();	   
 		   List<Note> list=new ArrayList<Note>(notes);			  

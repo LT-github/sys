@@ -10,4 +10,5 @@ public class PageGetReq {
 
 	private Integer page;
 	private Integer size;
+	private Long id;
 }
