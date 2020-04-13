@@ -131,20 +131,19 @@ public class InfoController {
 	      return HttpResult.success(page,"查询成功");
    }
     //获取通讯录,分页
-   @GetMapping("getInfoContacts/{id}")
-   public HttpResult<Object> getInfoContacts(@PathVariable Long id,@RequestBody PageGetReq req) throws ClientErrorException{
-	   	   	  
-		   Optional<Info> op = iInfoRepository.findById(id);
-		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
-		    Set<Contacts> contacts = op.get().getContacts();	   
-		   List<Contacts> list=new ArrayList<Contacts>(contacts);	  	  
-		   PagingList page = new PagingList();		  
+   @GetMapping("/getInfoContacts")
+   public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
+	   	   	  	
+		  Optional<Info> op = iInfoRepository.findById(req.getId());
+	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
+	        List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
+	        PagingList page = new PagingList();
+	       if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
+	       		  
 		   ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
 		   page.setPage(req.getPage());
-	       pageList.fen(page,ContactsVo.toVo(list));
-		  return HttpResult.success(page,"查询成功");
-	
-	     
+	       pageList.fen(page,ContactsVo.toVo(contacts));
+	      return HttpResult.success(page,"查询成功");
 	   
    }
 }
