@@ -132,7 +132,7 @@ public class InfoController {
 		return HttpResult.success(page,"查询成功");
 	}
 	//获取通讯录,分页
-	@GetMapping("/getInfoContacts")
+	@PostMapping("/getInfoContacts")
 	public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
 
 		Optional<Info> op = iInfoRepository.findById(req.getId());
@@ -148,4 +148,28 @@ public class InfoController {
 		return HttpResult.success(page,"查询成功");
 
 	}
+	
+	//获取通讯录,分页
+		@PostMapping("/getInfoJW")
+		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
+			String latitude = "";
+			String longitude ="";
+			Optional<Info> op = iInfoRepository.findById(req.getId());
+			List<String> list=new ArrayList<>();
+			
+			if(!op.isPresent()) { list.add(longitude); list.add(latitude); return HttpResult.success(list,"用户标识异常");}
+			Info info = op.get();
+			//纬度
+			 latitude = info.getLatitude();
+			//经度
+			 longitude = info.getLongitude();
+			
+			if(info.getLongitude()!=null)
+			list.add(longitude);
+			if(info.getLatitude()!=null)
+			list.add(latitude);
+			  
+			return HttpResult.success(list,"查询成功");
+			
+		}
 }
