@@ -7,6 +7,7 @@ import com.lt.sys.Utils.TokenUtil;
 import com.lt.sys.controller.req.Login;
 import com.lt.sys.dao.IUserRepository;
 import com.lt.sys.entity.User;
+import com.lt.sys.exception.ClientErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +26,13 @@ public class UserController {
     private TokenUtil tokenUtil;
 
     @PostMapping("login")
-    public HttpResult login(@RequestBody Login req){
+    public HttpResult login(@RequestBody Login req) throws ClientErrorException {
         User dbUser = iUserRepository.findByUsername(req.getUsername());
         if(dbUser == null )
-            throw new RuntimeException("登录失败,用户不存在");
+            throw new ClientErrorException("登录失败,用户不存在");
 
         if(!StringUtils.equals(req.getPassword(), dbUser.getPassword()))
-            throw new RuntimeException("登录失败，密码错误");
+            throw new ClientErrorException("登录失败，密码错误");
 
         String token = tokenUtil.getToken(dbUser, GlobalUtil.getCliectIp(ContextHolderUtil.getRequest()));
 
