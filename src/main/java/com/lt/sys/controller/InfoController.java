@@ -156,20 +156,25 @@ public class InfoController {
 		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
 			String latitude = "";
 			String longitude ="";
+			String address = "";
 			Optional<Info> op = iInfoRepository.findById(req.getId());
 			
 			Map<String,String> map=new HashMap<>();
 			
-			if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude);  return HttpResult.success(map,"用户标识异常");}
+			if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude); map.put("address", address); return HttpResult.success(map,"用户标识异常");}
 			Info info = op.get();
 			//纬度
 			 latitude = info.getLatitude();
 			//经度
 			 longitude = info.getLongitude();
+			 //地址
+			 address = info.getAddress();
 			 if(longitude!=null)
 			map.put("longitude", longitude);
 			 if(latitude!=null)
 			map.put("latitude", latitude);
+			 if(address!=null)
+			map.put("address", address);
 			
 			  
 			return HttpResult.success(map,"查询成功");
