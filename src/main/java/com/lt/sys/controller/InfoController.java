@@ -122,8 +122,9 @@ public class InfoController {
 	        Optional<Info> op = iInfoRepository.findById(req.getId());
 	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
 	        List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-	       if(notes==null || notes.isEmpty()) return HttpResult.success(null,"暂无数据");
-	       PagingList page = new PagingList();		  
+	        PagingList page = new PagingList();
+	       if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
+	       		  
 		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
 		   page.setPage(req.getPage());
 	       pageList.fen(page,MsgVo.toVo(notes));
