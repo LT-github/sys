@@ -5,8 +5,8 @@ import java.util.List;
 public class PagingList {
 
 	
-	private Integer currentPage;//当前页
-    private int pageSize;//每页显示记录条数
+	private Integer page;//当前页
+    private int size;//每页显示记录条数
     private int totalPage;//总页数
     private int star;//开始数据
     private int totalNum;//总共多少个元素
@@ -25,19 +25,20 @@ public class PagingList {
 	public void setTotalNum(int totalNum) {
 		this.totalNum = totalNum;
 	}
-	public Integer getCurrentPage() {
-        return currentPage;
-    }
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
-    public int getPageSize() {
-        return pageSize;
-    }
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-    public int getTotalPage() {
+	
+    public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public int getTotalPage() {
         return totalPage;
     }
     public void setTotalPage(int totalPage) {
