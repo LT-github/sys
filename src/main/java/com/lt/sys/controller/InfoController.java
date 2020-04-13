@@ -122,8 +122,12 @@ public class InfoController {
 	        Optional<Info> op = iInfoRepository.findById(req.getId());
 	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
 	        List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-	       if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");	
-	  return HttpResult.success(MsgVo.toVo(notes),"查询成功");
+	       if(notes==null || notes.isEmpty()) return HttpResult.success(null,"暂无数据");
+	       PagingList page = new PagingList();		  
+		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
+		   page.setPage(req.getPage());
+	       pageList.fen(page,MsgVo.toVo(notes));
+	      return HttpResult.success(page,"查询成功");
    }
     //获取通讯录,分页
    @GetMapping("getInfoContacts/{id}")
