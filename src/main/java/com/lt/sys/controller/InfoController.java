@@ -104,7 +104,7 @@ public class InfoController {
     public HttpResult<Object> getInfo(InfoGetDto dto) {
     	
     		Page<Info> page = iInfoRepository.findAll(dto);
-        	PageResp resp=new PageResp(page);
+        	PageResp resp=new PageResp<>(page);
              resp.setData(InfoVo.toVo(page.getContent()));
              
         return HttpResult.success(resp,"查询成功");	

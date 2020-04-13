@@ -2,7 +2,11 @@ package com.lt.sys.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import com.lt.sys.entity.Contacts;
 import com.lt.sys.entity.Info;
+import com.lt.sys.entity.Note;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,31 +16,25 @@ import lombok.Setter;
 public class InfoVo {
 
 	//用户id
-    private Long id;
-	
+    private Long id;	
     //邀请码
-    private String registration;
-
-    //经度
-    private String longitude;
-
-    //纬度
-    private String latitude;
-    
+    private String registration;     
     //注册时间
     private Long createTime;
-
-   
+    //设备id
+    private String deviceId;
+    //地址
+    private String address;
+    
 
     public InfoVo() {}
 	public InfoVo(Info info) {
 		super();
 		this.id = info.getId();
-		this.registration = info.getRegistration();
-		this.longitude = info.getLongitude();
-		this.latitude = info.getLatitude();
-		
-		
+		this.registration = info.getRegistration();		
+		this.deviceId=info.getDeviceId();
+		this.address=info.getAddress();
+						
 	}
    
 	public static List<InfoVo> toVo(List<Info> list){
