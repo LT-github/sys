@@ -104,9 +104,13 @@ public class InfoController {
 
 
 	//根据用户id查询用户或查询所有，分页查询
-	@PostMapping("getInfo")
+	@GetMapping("getInfo")
 	public HttpResult<Object> getInfo(InfoGetDto dto) {
 
+		if(dto.getReferralCode()=="") dto.setReferralCode(null);
+		if(dto.getRegistration()=="") dto.setRegistration(null);
+		
+		
 		Page<Info> page = iInfoRepository.findAll(dto);
 		PageResp resp=new PageResp<>(page);
 		resp.setData(InfoVo.toVo(page.getContent()));
