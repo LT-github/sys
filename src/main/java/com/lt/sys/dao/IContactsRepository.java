@@ -8,5 +8,5 @@ import com.lt.sys.jpa.BaseRepository;
 
 public interface IContactsRepository extends BaseRepository<Contacts,Long> {
 	
-	List<Contacts> findAllByInfo(Info info);
+	List<Contacts> findAllByInfo(Info info);  
 }

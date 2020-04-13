@@ -43,107 +43,109 @@ import org.springframework.web.bind.annotation.RestController;
 public class InfoController {
 
 
-    @Autowired
-    private IdWorker idWorker;
+	@Autowired
+	private IdWorker idWorker;
 
-    @Autowired
-    private IInfoRepository iInfoRepository;
+	@Autowired
+	private IInfoRepository iInfoRepository;
 
-    @Autowired
-    private INoteRepository iNoteRepository;
+	@Autowired
+	private INoteRepository iNoteRepository;
 
-    @Autowired
-    private IContactsRepository iContactsRepository;
+	@Autowired
+	private IContactsRepository iContactsRepository;
 
-    @PostMapping("save")
-    public HttpResult saveInfo(@RequestBody InfoDto dto){
-        System.out.println(dto.toString());
-        if (null != dto.getDeviceId()) {
-            Info info = iInfoRepository.findByDeviceId(dto.getDeviceId());
-            if (null != info) {
-                return null;
-            }
-        }
-        try {
-            Info info = new Info();
-            BeanUtils.copyProperties(dto,info);
-            info.setId(idWorker.nextId());
-            info.setCreateTime(System.currentTimeMillis());
-            iInfoRepository.save(info);
-            if (null != dto.getNoteDtos() && 0 != dto.getNoteDtos().size()) {
-                dto.getNoteDtos().stream().forEach(noteDto -> {
-                    Note note = new Note();
-                    note.setId(idWorker.nextId());
-                    BeanUtils.copyProperties(noteDto,note);
-                    note.setInfo(info);
-                    try{
-                        iNoteRepository.save(note);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                });
-            }
-            if (null != dto.getContactsDtos() && 0 != dto.getContactsDtos().size()) {
-                dto.getContactsDtos().stream().forEach(contactsDto -> {
-                    Contacts contacts = new Contacts();
-                    contacts.setId(idWorker.nextId());
-                    BeanUtils.copyProperties(contactsDto, contacts);
-                    contacts.setInfo(info);
-                    iContactsRepository.save(contacts);
-                });
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-            return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
-        }
+	@PostMapping("save")
+	public HttpResult saveInfo(@RequestBody InfoDto dto){
+		System.out.println(dto.toString());
+		if (null != dto.getDeviceId()) {
+			Info info = iInfoRepository.findByDeviceId(dto.getDeviceId());
+			if (null != info) {
+				return null;
+			}
+		}
+		try {
+			Info info = new Info();
+			BeanUtils.copyProperties(dto,info);
+			info.setId(idWorker.nextId());
+			info.setCreateTime(System.currentTimeMillis());
+			iInfoRepository.save(info);
+			if (null != dto.getNoteDtos() && 0 != dto.getNoteDtos().size()) {
+				dto.getNoteDtos().stream().forEach(noteDto -> {
+					Note note = new Note();
+					note.setId(idWorker.nextId());
+					BeanUtils.copyProperties(noteDto,note);
+					note.setInfo(info);
+					try{
+						iNoteRepository.save(note);
+					}catch (Exception e){
+						e.printStackTrace();
+					}
+				});
+			}
+			if (null != dto.getContactsDtos() && 0 != dto.getContactsDtos().size()) {
+				dto.getContactsDtos().stream().forEach(contactsDto -> {
+					Contacts contacts = new Contacts();
+					contacts.setId(idWorker.nextId());
+					BeanUtils.copyProperties(contactsDto, contacts);
+					contacts.setInfo(info);
+					iContactsRepository.save(contacts);
+				});
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+		}
 
-        return HttpResult.success(null,"Ok");
-    }
+		return HttpResult.success(null,"Ok");
+	}
 
-    
-  //根据用户id查询用户或查询所有，分页查询
-    @PostMapping("getInfo")
-    public HttpResult<Object> getInfo(InfoGetDto dto) {
-    	
-    		Page<Info> page = iInfoRepository.findAll(dto);
-        	PageResp resp=new PageResp<>(page);
-             resp.setData(InfoVo.toVo(page.getContent()));
-             
-        return HttpResult.success(resp,"查询成功");	
-		
-    	
-    }
-   
-    //获取用户短息，分页
-   @PostMapping("/getMsg")
-   public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
-	   
 
-	        Optional<Info> op = iInfoRepository.findById(req.getId());
-	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
-	        List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-	        PagingList page = new PagingList();
-	       if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
-	       		  
-		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
-		   page.setPage(req.getPage());
-	       pageList.fen(page,MsgVo.toVo(notes));
-	      return HttpResult.success(page,"查询成功");
-   }
-    //获取通讯录,分页
-   @GetMapping("/getInfoContacts")
-   public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
-	   	   	  	
-		  Optional<Info> op = iInfoRepository.findById(req.getId());
-	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
-	        List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
-	        PagingList page = new PagingList();
-	       if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
-	       		  
-		   ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
-		   page.setPage(req.getPage());
-	       pageList.fen(page,ContactsVo.toVo(contacts));
-	      return HttpResult.success(page,"查询成功");
-	   
-   }
+	//根据用户id查询用户或查询所有，分页查询
+	@PostMapping("getInfo")
+	public HttpResult<Object> getInfo(InfoGetDto dto) {
+
+		Page<Info> page = iInfoRepository.findAll(dto);
+		PageResp resp=new PageResp<>(page);
+		resp.setData(InfoVo.toVo(page.getContent()));
+
+		return HttpResult.success(resp,"查询成功");	
+
+
+	}
+
+	//获取用户短息，分页
+	@PostMapping("/getMsg")
+	public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
+
+
+		Optional<Info> op = iInfoRepository.findById(req.getId());
+		PagingList page = new PagingList();
+		if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+		List<Note> notes = iNoteRepository.findAllByInfo(op.get());
+
+		if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
+
+		ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
+		page.setPage(req.getPage());
+		pageList.fen(page,MsgVo.toVo(notes));
+		return HttpResult.success(page,"查询成功");
+	}
+	//获取通讯录,分页
+	@GetMapping("/getInfoContacts")
+	public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
+
+		Optional<Info> op = iInfoRepository.findById(req.getId());
+		PagingList page = new PagingList();
+		if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+		List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
+
+		if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
+
+		ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
+		page.setPage(req.getPage());
+		pageList.fen(page,ContactsVo.toVo(contacts));
+		return HttpResult.success(page,"查询成功");
+
+	}
 }
