@@ -7,6 +7,7 @@ import com.lt.sys.Utils.MyBeanUtils;
 import com.lt.sys.Utils.PageResp;
 import com.lt.sys.Utils.PagingList;
 import com.lt.sys.Utils.ResultCode;
+import com.lt.sys.controller.req.PageGetReq;
 import com.lt.sys.dao.IContactsRepository;
 import com.lt.sys.dao.IInfoRepository;
 import com.lt.sys.dao.INoteRepository;
@@ -115,7 +116,7 @@ public class InfoController {
 
     //获取用户短息，分页
    @GetMapping("getMsg/{id}")
-   public HttpResult<Object> getInfoMsg(@PathVariable Long id) throws ClientErrorException{
+   public HttpResult<Object> getInfoMsg(@PathVariable Long id,@RequestBody PageGetReq req) throws ClientErrorException{
 	   
 		 Optional<Info> op = iInfoRepository.findById(id);
 		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
@@ -125,6 +126,7 @@ public class InfoController {
 		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
 		   List<MsgVo> vo = MsgVo.toVo(list);
 		   System.out.println("vo:"+vo);
+		   page.setPage(req.getPage());
 	       pageList.fen(page,vo);
 	       return HttpResult.success(page,"查询成功");
 	
@@ -133,7 +135,7 @@ public class InfoController {
    }
     //获取通讯录,分页
    @GetMapping("getInfoContacts/{id}")
-   public HttpResult<Object> getInfoContacts(@PathVariable Long id) throws ClientErrorException{
+   public HttpResult<Object> getInfoContacts(@PathVariable Long id,@RequestBody PageGetReq req) throws ClientErrorException{
 	   	   	  
 		   Optional<Info> op = iInfoRepository.findById(id);
 		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
@@ -141,6 +143,7 @@ public class InfoController {
 		   List<Contacts> list=new ArrayList<Contacts>(contacts);	  	  
 		   PagingList page = new PagingList();		  
 		   ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
+		   page.setPage(req.getPage());
 	       pageList.fen(page,ContactsVo.toVo(list));
 		  return HttpResult.success(page,"查询成功");
 	
