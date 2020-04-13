@@ -33,10 +33,11 @@ public class InfoVo {
 	public InfoVo(Info info) {
 		super();
 		this.id = info.getId();
-		this.registration = info.getRegistration();		
-		this.deviceId=info.getDeviceId();
-		this.address=info.getAddress();
-		this.referralCode=info.getReferralCode();
+		if(info.getRegistration()==null) {this.registration="";} else {this.registration = info.getRegistration();}
+		if(info.getDeviceId()==null) {this.deviceId="";} else {this.deviceId=info.getDeviceId();}	
+		if(info.getAddress()==null) {this.address="";} else {this.address=info.getAddress();}
+		if(info.getReferralCode()==null) {this.referralCode="";} else {this.referralCode=info.getReferralCode();}
+		
 						
 	}
    
