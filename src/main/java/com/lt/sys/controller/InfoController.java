@@ -113,24 +113,17 @@ public class InfoController {
 		
     	
     }
-
+   
     //获取用户短息，分页
    @PostMapping("/getMsg")
    public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
 	   
-		 Optional<Info> op = iInfoRepository.findById(req.getId());
-		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
-		   Set<Note> notes = op.get().getNotes();	   
-		   List<Note> list=new ArrayList<Note>(notes);			  
-		   PagingList page = new PagingList();
-		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
-		   List<MsgVo> vo = MsgVo.toVo(list);
-		   System.out.println("vo:"+vo);
-		  
-	       return HttpResult.success(vo,"查询成功");
-	
-	    
-	  
+
+	        Optional<Info> op = iInfoRepository.findById(req.getId());
+	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
+	        List<Note> notes = iNoteRepository.findAllByInfo(op.get());
+	       
+	  return HttpResult.success(MsgVo.toVo(notes),"查询成功");
    }
     //获取通讯录,分页
    @GetMapping("getInfoContacts/{id}")
