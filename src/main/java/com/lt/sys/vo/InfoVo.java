@@ -25,6 +25,8 @@ public class InfoVo {
     private String deviceId;
     //地址
     private String address;
+    //邀请码
+    private String referralCode;
     
 
     public InfoVo() {}
@@ -34,6 +36,7 @@ public class InfoVo {
 		this.registration = info.getRegistration();		
 		this.deviceId=info.getDeviceId();
 		this.address=info.getAddress();
+		this.referralCode=info.getReferralCode();
 						
 	}
    
