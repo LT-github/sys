@@ -14,17 +14,18 @@ public class InfoGetDto extends DataQueryObjectPage{
 	    //用户id
 	   @QueryField(type = QueryType.EQUAL , name="id")
 	    private Long id;
-	   @QueryField(type = QueryType.EQUAL , name="registration")
+	   @QueryField(type = QueryType.FULL_LIKE , name="registration")
 	    private String registration;
-	   @QueryField(type = QueryType.BEWTEEN , name="pushEndTime")
-		private QueryBetween<Long> createTime;
-
+	   @QueryField(type = QueryType.BEWTEEN , name="crateTime")
+		private QueryBetween<Long> time;
+	   @QueryField(type = QueryType.FULL_LIKE , name="referralCode")
+	   private String referralCode;
 	    //经度
 	    private String longitude;
 
 	    //纬度
 	    private String latitude;
 	    
-	    
+	      
 	   
 }
