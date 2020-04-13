@@ -11,9 +11,10 @@ import lombok.Setter;
 @Getter
 public class InfoVo {
 
-	
+	//用户id
     private Long id;
 	
+    //邀请码
     private String registration;
 
     //经度
@@ -21,6 +22,9 @@ public class InfoVo {
 
     //纬度
     private String latitude;
+    
+    //注册时间
+    private Long createTime;
 
    
 
