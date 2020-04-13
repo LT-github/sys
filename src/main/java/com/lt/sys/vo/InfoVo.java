@@ -28,6 +28,8 @@ public class InfoVo {
     //邀请码
     private String referralCode;
     
+   
+    
 
     public InfoVo() {}
 	public InfoVo(Info info) {
@@ -37,7 +39,7 @@ public class InfoVo {
 		if(info.getDeviceId()==null) {this.deviceId="";} else {this.deviceId=info.getDeviceId();}	
 		if(info.getAddress()==null) {this.address="";} else {this.address=info.getAddress();}
 		if(info.getReferralCode()==null) {this.referralCode="";} else {this.referralCode=info.getReferralCode();}
-		
+		this.createTime=info.getCreateTime();
 						
 	}
    

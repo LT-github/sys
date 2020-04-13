@@ -24,6 +24,8 @@ public class MsgVo {
 	   
 	    private String msg;
 	    
+	   
+	    
 	    public MsgVo() {}
 
 		public MsgVo(Note note) {
@@ -32,6 +34,7 @@ public class MsgVo {
 			this.name = note.getName();
 			this.phone = note.getPhoneNumber();
 			this.msg = note.getMsg();
+			
 		}
 	    
 		public static List<MsgVo> toVo(List<Note> list){

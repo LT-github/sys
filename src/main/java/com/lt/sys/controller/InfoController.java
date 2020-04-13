@@ -120,9 +120,11 @@ public class InfoController {
 		 Optional<Info> op = iInfoRepository.findById(id);
 		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
 		   Set<Note> notes = op.get().getNotes();	   
-		   List<Note> list=new ArrayList<Note>(notes);	   
+		   List<Note> list=new ArrayList<Note>(notes);	
+		   System.out.println("list:"+list);
 		   PagingList page = new PagingList();
 		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
+		  
 	       pageList.fen(page,MsgVo.toVo(list));
 	       return HttpResult.success(page,"查询成功");
 	
@@ -137,7 +139,7 @@ public class InfoController {
 		   if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");	  
 		    Set<Contacts> contacts = op.get().getContacts();	   
 		   List<Contacts> list=new ArrayList<Contacts>(contacts);	  	  
-		   PagingList page = new PagingList();
+		   PagingList page = new PagingList();		  
 		   ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
 	       pageList.fen(page,ContactsVo.toVo(list));
 		  return HttpResult.success(page,"查询成功");
