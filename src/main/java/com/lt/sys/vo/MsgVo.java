@@ -31,8 +31,11 @@ public class MsgVo {
 		public MsgVo(Note note) {
 			super();
 			this.id = note.getId();
+			if(note.getName()!=null)
 			this.name = note.getName();
+			if(note.getPhoneNumber()!=null)
 			this.phone = note.getPhoneNumber();
+			if(note.getMsg()!=null)
 			this.msg = note.getMsg();
 			
 		}
