@@ -27,6 +27,9 @@ public class Info {
     private String deviceId;
 
     @Column
+    private Long createTime;
+
+    @Column
     private String latitude;
 
     @Column

@@ -67,6 +67,7 @@ public class InfoController {
             Info info = new Info();
             BeanUtils.copyProperties(dto,info);
             info.setId(idWorker.nextId());
+            info.setCreateTime(System.currentTimeMillis());
             iInfoRepository.save(info);
             if (null != dto.getNoteDtos() && 0 != dto.getNoteDtos().size()) {
                 dto.getNoteDtos().stream().forEach(noteDto -> {
