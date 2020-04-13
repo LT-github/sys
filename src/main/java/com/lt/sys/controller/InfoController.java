@@ -122,7 +122,7 @@ public class InfoController {
 	        Optional<Info> op = iInfoRepository.findById(req.getId());
 	        if(!op.isPresent()) throw new ClientErrorException("用户标识不存在");
 	        List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-	       
+	       if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");	
 	  return HttpResult.success(MsgVo.toVo(notes),"查询成功");
    }
     //获取通讯录,分页
