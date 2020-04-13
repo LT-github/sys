@@ -126,11 +126,10 @@ public class InfoController {
 		   ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
 		   List<MsgVo> vo = MsgVo.toVo(list);
 		   System.out.println("vo:"+vo);
-		   page.setPage(req.getPage());
-	       pageList.fen(page,vo);
-	       return HttpResult.success(page,"查询成功");
+		  
+	       return HttpResult.success(vo,"查询成功");
 	
-	  
+	    
 	  
    }
     //获取通讯录,分页
