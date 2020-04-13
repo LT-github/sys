@@ -8,6 +8,7 @@ import com.lt.sys.controller.req.Login;
 import com.lt.sys.dao.IUserRepository;
 import com.lt.sys.entity.User;
 import com.lt.sys.exception.ClientErrorException;
+import com.lt.sys.vo.UserLoginResp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class UserController {
 
         String token = tokenUtil.getToken(dbUser, GlobalUtil.getCliectIp(ContextHolderUtil.getRequest()));
 
-        return HttpResult.success(null,"登录成功");
+        return HttpResult.success(new UserLoginResp(dbUser.getId(), dbUser.getUsername(),token),"登录成功");
     }
 
 }
