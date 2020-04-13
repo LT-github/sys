@@ -14,7 +14,7 @@ public class InfoGetDto extends DataQueryObjectPage{
 	    //用户id
 	   @QueryField(type = QueryType.EQUAL , name="id")
 	    private Long id;
-	   @QueryField(type = QueryType.EQUAL , name="registration")
+	   @QueryField(type = QueryType.FULL_LIKE , name="registration")
 	    private String registration;
 	   @QueryField(type = QueryType.BEWTEEN , name="createTime")
 		private QueryBetween<Long> time;
