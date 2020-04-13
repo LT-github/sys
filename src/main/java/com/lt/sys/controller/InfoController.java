@@ -22,7 +22,9 @@ import com.lt.sys.vo.InfoVo;
 import com.lt.sys.vo.MsgVo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -155,21 +157,22 @@ public class InfoController {
 			String latitude = "";
 			String longitude ="";
 			Optional<Info> op = iInfoRepository.findById(req.getId());
-			List<String> list=new ArrayList<>();
 			
-			if(!op.isPresent()) { list.add(longitude); list.add(latitude); return HttpResult.success(list,"用户标识异常");}
+			Map<String,String> map=new HashMap<>();
+			
+			if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude);  return HttpResult.success(map,"用户标识异常");}
 			Info info = op.get();
 			//纬度
 			 latitude = info.getLatitude();
 			//经度
 			 longitude = info.getLongitude();
+			 if(longitude!=null)
+			map.put("longitude", longitude);
+			 if(latitude!=null)
+			map.put("latitude", latitude);
 			
-			if(info.getLongitude()!=null)
-			list.add(longitude);
-			if(info.getLatitude()!=null)
-			list.add(latitude);
 			  
-			return HttpResult.success(list,"查询成功");
+			return HttpResult.success(map,"查询成功");
 			
 		}
 }
