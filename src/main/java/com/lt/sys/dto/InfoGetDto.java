@@ -28,12 +28,7 @@ public class InfoGetDto extends DataQueryObjectPage{
 	    //纬度
 	    private String latitude;
 
-		@Override
-		public String toString() {
-			return "InfoGetDto [id=" + id + ", registration=" + registration + ", createTime=" + createTime + ", referralCode="
-					+ referralCode + ", longitude=" + longitude + ", latitude=" + latitude + "]";
-		}
-	    
-	  
+		
+	    	  
 	   
 }
