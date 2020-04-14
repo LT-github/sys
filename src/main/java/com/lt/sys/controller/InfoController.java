@@ -3,6 +3,7 @@ package com.lt.sys.controller;
 import com.lt.sys.Utils.HttpResult;
 import com.lt.sys.Utils.IdWorker;
 import com.lt.sys.Utils.ListFenUtils;
+import com.lt.sys.Utils.ListPageUtil;
 import com.lt.sys.Utils.MyBeanUtils;
 import com.lt.sys.Utils.PageResp;
 import com.lt.sys.Utils.PagingList;
@@ -136,20 +137,28 @@ public class InfoController {
 
 
 		try {
+			
+			
+			if(req.getId()==null) throw new ClientErrorException("用户标识异常");
 			Optional<Info> op = iInfoRepository.findById(req.getId());
-			PagingList page = new PagingList();
-			if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+			
+			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Note> notes = iNoteRepository.findAllByInfo(op.get());
 
-			if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
+			if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");
 
-			ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
-			page.setPage(req.getPage());
-			pageList.fen(page,MsgVo.toVo(notes));
+//			ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
+//			page.setPage(req.getPage());
+//			pageList.fen(page,MsgVo.toVo(notes));
+			
+			
+			ListPageUtil<MsgVo> listPageUtil = new ListPageUtil<MsgVo>(MsgVo.toVo(notes),req.getPage(),req.getSize());
+			
+	       PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
 		} catch (Exception e) {
-			e.printStackTrace();
-			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+			
+			return HttpResult.failure(ResultCode.CLIENT_ERROR.getCode(),e.getMessage());
 		}
 		
 	}
@@ -159,27 +168,27 @@ public class InfoController {
 	public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
 
 		try {
-			
+			if(req.getId()==null) throw new ClientErrorException("用户标识异常");
 			Optional<Info> op = iInfoRepository.findById(req.getId());
 			PagingList page = new PagingList();
-			if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
 
-			if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
+			if(contacts==null || contacts.isEmpty()) throw new ClientErrorException("暂无数据");
 
 			ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
 			page.setPage(req.getPage());
 			pageList.fen(page,ContactsVo.toVo(contacts));
 			return HttpResult.success(page,"查询成功");
 		} catch (Exception e) {
-			e.printStackTrace();
-			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+			
+			return HttpResult.failure(ResultCode.CLIENT_ERROR.getCode(),e.getMessage());
 		}
 		
 
 	}
 	
-	//获取通讯录,分页
+	//获取经纬度
 	    @UserLoginToken
 		@PostMapping("/getInfoJW")
 		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
