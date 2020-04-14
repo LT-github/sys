@@ -18,7 +18,8 @@ public class InfoGetDto extends DataQueryObjectPage{
 	    private String registration;
 	   @QueryField(type = QueryType.BEWTEEN , name="createTime")
 		private QueryBetween<Long> createTime;
-	   
+	   @QueryField(type = QueryType.FULL_LIKE , name="deviceId")
+	   private String deviceId;
 	 	   
 	   @QueryField(type = QueryType.FULL_LIKE , name="referralCode")
 	   private String referralCode;
