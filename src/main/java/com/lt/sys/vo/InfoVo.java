@@ -40,6 +40,7 @@ public class InfoVo {
 		if(info.getAddress()==null) {this.address="";} else {this.address=info.getAddress();}
 		if(info.getReferralCode()==null) {this.referralCode="";} else {this.referralCode=info.getReferralCode();}
 		this.createTime=info.getCreateTime();
+		
 						
 	}
    

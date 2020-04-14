@@ -107,15 +107,21 @@ public class InfoController {
 	@GetMapping("getInfo")
 	public HttpResult<Object> getInfo(InfoGetDto dto) {
 
-		if(dto.getReferralCode()=="") dto.setReferralCode(null);
-		if(dto.getRegistration()=="") dto.setRegistration(null);
-		if(dto.getTime().getAfter()==null || dto.getTime().getBefore()==null) {}
-		
-		Page<Info> page = iInfoRepository.findAll(dto);
-		PageResp resp=new PageResp<>(page);
-		resp.setData(InfoVo.toVo(page.getContent()));
+		try {
+			if(dto.getReferralCode()=="") dto.setReferralCode(null);
+			if(dto.getRegistration()=="") dto.setRegistration(null);
+			System.out.println("dto:"+dto);
+			
+			Page<Info> page = iInfoRepository.findAll(dto);
+			PageResp resp=new PageResp<>(page);
+			resp.setData(InfoVo.toVo(page.getContent()));
 
-		return HttpResult.success(resp,"查询成功");	
+			return HttpResult.success(resp,"查询成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+		}
+			
 
 
 	}
