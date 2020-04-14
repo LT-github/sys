@@ -140,21 +140,12 @@ public class InfoController {
 			
 			
 			if(req.getId()==null) throw new ClientErrorException("用户标识异常");
-			Optional<Info> op = iInfoRepository.findById(req.getId());
-			
+			Optional<Info> op = iInfoRepository.findById(req.getId());			
 			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-
-			if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");
-
-//			ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
-//			page.setPage(req.getPage());
-//			pageList.fen(page,MsgVo.toVo(notes));
-			
-			
-			ListPageUtil<MsgVo> listPageUtil = new ListPageUtil<MsgVo>(MsgVo.toVo(notes),req.getPage(),req.getSize());
-			
-	       PagingList page = listPageUtil.getPagedList();
+			if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");						
+			ListPageUtil<MsgVo> listPageUtil = new ListPageUtil<MsgVo>(MsgVo.toVo(notes),req.getPage(),req.getSize());			
+	        PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
 		} catch (Exception e) {
 			
@@ -169,16 +160,12 @@ public class InfoController {
 
 		try {
 			if(req.getId()==null) throw new ClientErrorException("用户标识异常");
-			Optional<Info> op = iInfoRepository.findById(req.getId());
-			PagingList page = new PagingList();
+			Optional<Info> op = iInfoRepository.findById(req.getId());			
 			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
-
 			if(contacts==null || contacts.isEmpty()) throw new ClientErrorException("暂无数据");
-
-			ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
-			page.setPage(req.getPage());
-			pageList.fen(page,ContactsVo.toVo(contacts));
+			ListPageUtil<ContactsVo> listPageUtil = new ListPageUtil<ContactsVo>(ContactsVo.toVo(contacts),req.getPage(),req.getSize());
+			 PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
 		} catch (Exception e) {
 			
