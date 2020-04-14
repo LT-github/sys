@@ -147,8 +147,7 @@ public class InfoController {
 			ListPageUtil<MsgVo> listPageUtil = new ListPageUtil<MsgVo>(MsgVo.toVo(notes),req.getPage(),req.getSize());			
 	        PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			return HttpResult.failure(ResultCode.CLIENT_ERROR.getCode(),e.getMessage());
 		}
 		
@@ -167,8 +166,7 @@ public class InfoController {
 			ListPageUtil<ContactsVo> listPageUtil = new ListPageUtil<ContactsVo>(ContactsVo.toVo(contacts),req.getPage(),req.getSize());
 			 PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			return HttpResult.failure(ResultCode.CLIENT_ERROR.getCode(),e.getMessage());
 		}
 		
@@ -181,13 +179,13 @@ public class InfoController {
 		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
 			
 			try {
+				if(req.getId()==null) throw new ClientErrorException("用户标识异常");
 				String latitude = "";
 				String longitude ="";
 				String address = "";
 				Optional<Info> op = iInfoRepository.findById(req.getId());
-				
-				Map<String,String> map=new HashMap<>();
-				
+				if(!op.isPresent()) throw new ClientErrorException("该用户不存在");
+				Map<String,String> map=new HashMap<>();				
 				if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude); map.put("address", address); return HttpResult.success(map,"用户标识异常");}
 				Info info = op.get();
 				//纬度
@@ -202,8 +200,7 @@ public class InfoController {
 				map.put("latitude", latitude);
 				 if(address!=null)
 				map.put("address", address);
-				
-				  
+								  
 				return HttpResult.success(map,"查询成功");
 				
 			} catch (Exception e) {
