@@ -109,6 +109,8 @@ public class InfoController {
 	@PostMapping("getInfo")
 	public HttpResult<Object> getInfo(@RequestBody InfoGetDto dto) {
 
+		dto.setPropertyName("createTime");
+		dto.setAscending(true);
 		try {
 			if(dto.getReferralCode()=="") dto.setReferralCode(null);
 			if(dto.getRegistration()=="") dto.setRegistration(null);
@@ -152,6 +154,7 @@ public class InfoController {
 		
 	}
 	//获取通讯录,分页
+	@UserLoginToken
 	@PostMapping("/getInfoContacts")
 	public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
 
@@ -177,6 +180,7 @@ public class InfoController {
 	}
 	
 	//获取通讯录,分页
+	    @UserLoginToken
 		@PostMapping("/getInfoJW")
 		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
 			
