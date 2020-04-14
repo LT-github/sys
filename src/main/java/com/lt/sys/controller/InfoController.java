@@ -110,7 +110,7 @@ public class InfoController {
 	public HttpResult<Object> getInfo(@RequestBody InfoGetDto dto) {
 
 		dto.setPropertyName("createTime");
-		dto.setAscending(true);
+		dto.setAscending(false);
 		try {
 			if(dto.getReferralCode()=="") dto.setReferralCode(null);
 			if(dto.getRegistration()=="") dto.setRegistration(null);
