@@ -3,10 +3,15 @@ package com.lt.sys.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.lt.sys.Utils.GlobalUtil;
 import com.lt.sys.Utils.HttpResult;
 import com.lt.sys.Utils.ResultCode;
 import com.lt.sys.annotation.UserLoginToken;
 import com.lt.sys.dao.IUserRepository;
+import com.lt.sys.entity.User;
+
 import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -16,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 
 /**
@@ -62,13 +68,56 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }catch (Exception e) {
                 	return error(e.getMessage(), httpServletResponse);
                 }
+                try {
+	                String cliectIp =GlobalUtil.getCliectIp(httpServletRequest);
+	                if(!StringUtils.equals(ip,cliectIp)) {
+	                	throw new RuntimeException("无效的token，请重新登录");
+	                }
 
+	                String password = validation(Long.parseLong(userId),uri , cliectIp,object);
+	                // 验证 token
+	                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(password)).build();//;
+                    jwtVerifier.verify(token);
+                } catch (Exception e) {
+                	return error(e.getMessage(), httpServletResponse);
+                }
                 return true;
             }
         }
         return true;
     }
 
+    private String validation(Long id,String uri,String ip,Object object) {
+
+    	Optional<User> optional = iUserRepository.findById(id);
+
+    	if(!optional.isPresent()) {
+    		throw new RuntimeException("用户不存在");
+    	}
+
+    	User user = optional.get();
+    	
+
+    	
+    		
+
+//    	if(StringUtils.equals(discriminator, Store.class.getSimpleName())) {
+//    		if(!uri.contains("/operation")) {
+//    			throw new RuntimeException("权限不足");
+//    		}
+//    	}
+
+    	
+    	iUserRepository.save(user);
+
+    	 // 验证是否有访问该方法的权限
+        
+            return user.getPassword();
+        
+
+
+    	//return user.getPassword();
+	}
 
 	public boolean error(String msg,HttpServletResponse response) {
     	try {
