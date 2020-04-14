@@ -130,63 +130,83 @@ public class InfoController {
 	public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
 
 
-		Optional<Info> op = iInfoRepository.findById(req.getId());
-		PagingList page = new PagingList();
-		if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
-		List<Note> notes = iNoteRepository.findAllByInfo(op.get());
+		try {
+			Optional<Info> op = iInfoRepository.findById(req.getId());
+			PagingList page = new PagingList();
+			if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+			List<Note> notes = iNoteRepository.findAllByInfo(op.get());
 
-		if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
+			if(notes==null || notes.isEmpty()) return HttpResult.success(page,"暂无数据");
 
-		ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
-		page.setPage(req.getPage());
-		pageList.fen(page,MsgVo.toVo(notes));
-		return HttpResult.success(page,"查询成功");
+			ListFenUtils<MsgVo> pageList = new ListFenUtils<MsgVo>();
+			page.setPage(req.getPage());
+			pageList.fen(page,MsgVo.toVo(notes));
+			return HttpResult.success(page,"查询成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+		}
+		
 	}
 	//获取通讯录,分页
 	@PostMapping("/getInfoContacts")
 	public HttpResult<Object> getInfoContacts(@RequestBody PageGetReq req) throws ClientErrorException{
 
-		Optional<Info> op = iInfoRepository.findById(req.getId());
-		PagingList page = new PagingList();
-		if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
-		List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
+		try {
+			
+			Optional<Info> op = iInfoRepository.findById(req.getId());
+			PagingList page = new PagingList();
+			if(!op.isPresent()) return HttpResult.success(page,"用户标识异常");
+			List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
 
-		if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
+			if(contacts==null || contacts.isEmpty()) return HttpResult.success(page,"暂无数据");
 
-		ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
-		page.setPage(req.getPage());
-		pageList.fen(page,ContactsVo.toVo(contacts));
-		return HttpResult.success(page,"查询成功");
+			ListFenUtils<ContactsVo> pageList = new ListFenUtils<ContactsVo>();
+			page.setPage(req.getPage());
+			pageList.fen(page,ContactsVo.toVo(contacts));
+			return HttpResult.success(page,"查询成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+		}
+		
 
 	}
 	
 	//获取通讯录,分页
 		@PostMapping("/getInfoJW")
 		public HttpResult<Object> getInfoJW(@RequestBody PageGetReq req) throws ClientErrorException{
-			String latitude = "";
-			String longitude ="";
-			String address = "";
-			Optional<Info> op = iInfoRepository.findById(req.getId());
 			
-			Map<String,String> map=new HashMap<>();
-			
-			if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude); map.put("address", address); return HttpResult.success(map,"用户标识异常");}
-			Info info = op.get();
-			//纬度
-			 latitude = info.getLatitude();
-			//经度
-			 longitude = info.getLongitude();
-			 //地址
-			 address = info.getAddress();
-			 if(longitude!=null)
-			map.put("longitude", longitude);
-			 if(latitude!=null)
-			map.put("latitude", latitude);
-			 if(address!=null)
-			map.put("address", address);
-			
-			  
-			return HttpResult.success(map,"查询成功");
+			try {
+				String latitude = "";
+				String longitude ="";
+				String address = "";
+				Optional<Info> op = iInfoRepository.findById(req.getId());
+				
+				Map<String,String> map=new HashMap<>();
+				
+				if(!op.isPresent()) {map.put("longitude", longitude);map.put("latitude", latitude); map.put("address", address); return HttpResult.success(map,"用户标识异常");}
+				Info info = op.get();
+				//纬度
+				 latitude = info.getLatitude();
+				//经度
+				 longitude = info.getLongitude();
+				 //地址
+				 address = info.getAddress();
+				 if(longitude!=null)
+				map.put("longitude", longitude);
+				 if(latitude!=null)
+				map.put("latitude", latitude);
+				 if(address!=null)
+				map.put("address", address);
+				
+				  
+				return HttpResult.success(map,"查询成功");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return HttpResult.failure(ResultCode.SERVER_ERROR.getCode(),e.getMessage());
+			}
 			
 		}
 }
