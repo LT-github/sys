@@ -143,7 +143,7 @@ public class InfoController {
 			Optional<Info> op = iInfoRepository.findById(req.getId());			
 			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Note> notes = iNoteRepository.findAllByInfo(op.get());
-			if(notes==null || notes.isEmpty()) throw new ClientErrorException("暂无数据");						
+			if(notes==null || notes.isEmpty()) throw new ClientErrorException("短信录没有任何数据");						
 			ListPageUtil<MsgVo> listPageUtil = new ListPageUtil<MsgVo>(MsgVo.toVo(notes),req.getPage(),req.getSize());			
 	        PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
@@ -163,7 +163,7 @@ public class InfoController {
 			Optional<Info> op = iInfoRepository.findById(req.getId());			
 			if(!op.isPresent()) throw new ClientErrorException("用户标识异常");
 			List<Contacts> contacts = iContactsRepository.findAllByInfo(op.get());
-			if(contacts==null || contacts.isEmpty()) throw new ClientErrorException("暂无数据");
+			if(contacts==null || contacts.isEmpty()) throw new ClientErrorException("通讯录没有任何数据");
 			ListPageUtil<ContactsVo> listPageUtil = new ListPageUtil<ContactsVo>(ContactsVo.toVo(contacts),req.getPage(),req.getSize());
 			 PagingList page = listPageUtil.getPagedList();
 			return HttpResult.success(page,"查询成功");
