@@ -7,6 +7,7 @@ import com.lt.sys.Utils.MyBeanUtils;
 import com.lt.sys.Utils.PageResp;
 import com.lt.sys.Utils.PagingList;
 import com.lt.sys.Utils.ResultCode;
+import com.lt.sys.annotation.UserLoginToken;
 import com.lt.sys.controller.req.PageGetReq;
 import com.lt.sys.dao.IContactsRepository;
 import com.lt.sys.dao.IInfoRepository;
@@ -104,6 +105,7 @@ public class InfoController {
 
 
 	//根据用户id查询用户或查询所有，分页查询
+	@UserLoginToken
 	@PostMapping("getInfo")
 	public HttpResult<Object> getInfo(@RequestBody InfoGetDto dto) {
 
@@ -126,6 +128,7 @@ public class InfoController {
 	}
 
 	//获取用户短息，分页
+	@UserLoginToken
 	@PostMapping("/getMsg")
 	public HttpResult<Object> getInfoMsg(@RequestBody PageGetReq req) throws ClientErrorException{
 
