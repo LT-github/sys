@@ -104,8 +104,8 @@ public class InfoController {
 
 
 	//根据用户id查询用户或查询所有，分页查询
-	@GetMapping("getInfo")
-	public HttpResult<Object> getInfo(InfoGetDto dto) {
+	@PostMapping("getInfo")
+	public HttpResult<Object> getInfo(@RequestBody InfoGetDto dto) {
 
 		try {
 			if(dto.getReferralCode()=="") dto.setReferralCode(null);
