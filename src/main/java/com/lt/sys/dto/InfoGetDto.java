@@ -17,11 +17,9 @@ public class InfoGetDto extends DataQueryObjectPage{
 	   @QueryField(type = QueryType.FULL_LIKE , name="registration")
 	    private String registration;
 	   @QueryField(type = QueryType.BEWTEEN , name="createTime")
-		private QueryBetween<Long> time;
+		private QueryBetween<Long> createTime;
 	   
-	   private Long before;
-	   private Long after;
-	   
+	 	   
 	   @QueryField(type = QueryType.FULL_LIKE , name="referralCode")
 	   private String referralCode;
 	    //经度
@@ -32,7 +30,7 @@ public class InfoGetDto extends DataQueryObjectPage{
 
 		@Override
 		public String toString() {
-			return "InfoGetDto [id=" + id + ", registration=" + registration + ", time=" + time + ", referralCode="
+			return "InfoGetDto [id=" + id + ", registration=" + registration + ", createTime=" + createTime + ", referralCode="
 					+ referralCode + ", longitude=" + longitude + ", latitude=" + latitude + "]";
 		}
 	    

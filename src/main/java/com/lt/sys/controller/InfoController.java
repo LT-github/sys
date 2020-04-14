@@ -110,11 +110,7 @@ public class InfoController {
 		try {
 			if(dto.getReferralCode()=="") dto.setReferralCode(null);
 			if(dto.getRegistration()=="") dto.setRegistration(null);
-			System.out.println("dto:"+dto);
-			if(dto.getBefore()!=null || dto.getAfter()!=null) {
-				dto.getTime().setAfter(dto.getAfter());
-				dto.getTime().setBefore(dto.getBefore());
-			}
+			System.out.println("dto:"+dto);			
 			Page<Info> page = iInfoRepository.findAll(dto);
 			PageResp resp=new PageResp<>(page);
 			resp.setData(InfoVo.toVo(page.getContent()));

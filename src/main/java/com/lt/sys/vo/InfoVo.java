@@ -39,6 +39,7 @@ public class InfoVo {
 		if(info.getDeviceId()==null) {this.deviceId="";} else {this.deviceId=info.getDeviceId();}	
 		if(info.getAddress()==null) {this.address="";} else {this.address=info.getAddress();}
 		if(info.getReferralCode()==null) {this.referralCode="";} else {this.referralCode=info.getReferralCode();}
+		if(info.getCreateTime()!=null)
 		this.createTime=info.getCreateTime();
 		
 						
